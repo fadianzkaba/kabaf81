@@ -1,6 +1,15 @@
 package main
 
-func Fibonacci(n uint) (uint64, error) {
+import (
+	"context"
+
+	"github.com/anzx/pkg/opentelemetry"
+)
+
+func Fibonacci(ctx context.Context, n uint) (uint64, error) {
+	_, spanEnd := opentelemetry.AddNamedSpan(ctx, "main", "Fibonacci")
+	defer spanEnd()
+
 	if n <= 1 {
 		return uint64(n), nil
 	}
