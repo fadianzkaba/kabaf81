@@ -5,18 +5,22 @@ import (
 	"fmt"
 	"io"
 	"log"
+
+	"github.com/anzx/pkg/opentelemetry"
 )
 
 type App struct {
 	r io.Reader
-	l *log.Logger
 }
 
-func NewApp(r io.Reader, l *log.Logger) *App {
-	return &App{r: r, l: l}
+func NewApp(r io.Reader) *App {
+	return &App{r: r}
 }
 
 func (a *App) Run(ctx context.Context) error {
+	ctx, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Run")
+	defer spanEnd()
+
 	for {
 		n, err := a.Poll(ctx)
 		if err != nil {
@@ -28,7 +32,10 @@ func (a *App) Run(ctx context.Context) error {
 }
 
 func (a *App) Poll(ctx context.Context) (uint, error) {
-	a.l.Print("This what Fabicca would like to know")
+	_, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Poll")
+	defer spanEnd()
+
+	log.Print("This what Fabicca would like to know")
 
 	var n uint
 	_, err := fmt.Fscanf(a.r, "%d\n", &n)
@@ -36,11 +43,13 @@ func (a *App) Poll(ctx context.Context) (uint, error) {
 }
 
 func (a *App) Write(ctx context.Context, n uint) {
-	f, err := Fibonacci(n)
-	if err != nil {
-		a.l.Printf("Fibonacci(%d): %v\n", n, err)
-	} else {
-		a.l.Printf("Fibonacci(%d) = %d\n", n, f)
-	}
+	ctx, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Write")
+	defer spanEnd()
 
+	f, err := Fibonacci(ctx, n)
+	if err != nil {
+		log.Printf("Fibonacci(%d): %v\n", n, err)
+	} else {
+		log.Printf("Fibonacci(%d) = %d\n", n, f)
+	}
 }
