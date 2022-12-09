@@ -25,7 +25,7 @@ func main() {
 	}
 
 	myVar2 := User{
-		FirstName: "Farah",
+		FirstName: "Fadi1",
 		LastName:  "Kaba",
 	}
 
