@@ -13,6 +13,8 @@ import (
 )
 
 func main() {
+	//OTEL_EXPORTER_OTLP_ENDPOINT := "http://localhost:16686/"
+
 	cfg := &opentelemetry.Config{
 		Metrics: metrics.Config{
 			Exporter: "stdout",
@@ -21,7 +23,7 @@ func main() {
 			Exporter: "stdout",
 		},
 		Exporters: exporters.Exporters{
-			Stdout: exporters.StdoutConfig{},
+			Stdout: exporters.StdoutConfig{OTEL_EXPORTER_OTLP_ENDPOINT},
 		},
 	}
 
