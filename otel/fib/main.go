@@ -13,23 +13,41 @@ import (
 )
 
 func main() {
-	//OTEL_EXPORTER_OTLP_ENDPOINT := "http://localhost:16686/"
+	var otelConfig *opentelemetry.Config
 
-	cfg := &opentelemetry.Config{
-		Metrics: metrics.Config{
-			Exporter: "stdout",
-		},
-		Trace: trace.Config{
-			Exporter: "stdout",
-		},
-		Exporters: exporters.Exporters{
-			Stdout: exporters.StdoutConfig{OTEL_EXPORTER_OTLP_ENDPOINT},
-		},
+	// Set exporter apprilately depending on whether or not we detect the presence
+	// of the OTEL_EXPORTER_OTLP_ENDPOINT environment variable (as per usptream OTEL docs).
+	if endpoint, found := os.LookupEnv("OTEL_EXPORTER_OTLP_ENDPOINT"); found {
+		otelConfig = &opentelemetry.Config{
+			Metrics: metrics.Config{
+				Exporter: "prometheus",
+			},
+			Trace: trace.Config{
+				Exporter: "jaeger",
+			},
+			Exporters: exporters.Exporters{
+				Jaeger: exporters.JaegerConfig{
+					CollectorEndpoint: endpoint,
+				},
+			},
+		}
+	} else {
+		otelConfig = &opentelemetry.Config{
+			Metrics: metrics.Config{
+				Exporter: "stdout",
+			},
+			Trace: trace.Config{
+				Exporter: "stdout",
+			},
+			Exporters: exporters.Exporters{
+				Stdout: exporters.StdoutConfig{},
+			},
+		}
 	}
 
 	ctx := context.Background()
 
-	err := opentelemetry.Start(ctx, cfg)
+	err := opentelemetry.Start(ctx, otelConfig)
 	if err != nil {
 		log.Fatalf("error starting opentelemetrty")
 	}

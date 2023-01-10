@@ -2,6 +2,8 @@ module fib
 
 go 1.19
 
+require github.com/anzx/pkg/opentelemetry v0.27.0
+
 require (
 	cloud.google.com/go/compute v1.12.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.1 // indirect
@@ -17,7 +19,6 @@ require (
 	github.com/anzx/pkg/jwtctx v0.1.1 // indirect
 	github.com/anzx/pkg/log v0.1.12 // indirect
 	github.com/anzx/pkg/monitoring v0.6.4 // indirect
-	github.com/anzx/pkg/opentelemetry v0.27.0 // indirect
 	github.com/arr-ai/frozen v1.2.0 // indirect
 	github.com/arr-ai/hash v0.8.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
