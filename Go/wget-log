@@ -1,0 +1,9 @@
+Proxy request sent, awaiting response... 200 OK
+Length: 267 [binary/octet-stream]
+Saving to: ‘/Users/kabaf/.cache/trunk/cli/tmp.CHwrceYkkp/launcher/latest’
+
+     0K                                                       100%  255M=0s
+
+utime(/Users/kabaf/.cache/trunk/cli/tmp.CHwrceYkkp/launcher/latest): No such file or directory
+2023-03-23 13:32:14 (255 MB/s) - ‘/Users/kabaf/.cache/trunk/cli/tmp.CHwrceYkkp/launcher/latest’ saved [267/267]
+
