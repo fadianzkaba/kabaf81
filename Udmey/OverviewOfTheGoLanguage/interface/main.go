@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+type Fadi struct {
+	FadiKaba []Animal
+}
+
 type Animal interface {
 	say() string
 	NumberOfLegs() int
@@ -26,6 +30,10 @@ type Cat struct {
 }
 
 func main() {
+
+	f := Fadi{
+		FadiKaba: ,
+	}
 
 	dog := Dog{
 		Name:  "Bulldogs",
