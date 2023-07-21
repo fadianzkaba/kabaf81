@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -17,6 +18,7 @@ func main() {
 
 	// Set exporter apprilately depending on whether or not we detect the presence
 	// of the OTEL_EXPORTER_OTLP_ENDPOINT environment variable (as per usptream OTEL docs).
+
 	if endpoint, found := os.LookupEnv("OTEL_EXPORTER_OTLP_ENDPOINT"); found {
 		otelConfig = &opentelemetry.Config{
 			Metrics: metrics.Config{
@@ -45,11 +47,18 @@ func main() {
 		}
 	}
 
+
 	ctx := context.Background()
+	fmt.Println("OTEL Configurations:\n", otelConfig)
+
+	fmt.Println("OtelConfig:", otelConfig)
 
 	err := opentelemetry.Start(ctx, otelConfig)
 	if err != nil {
 		log.Fatalf("error starting opentelemetrty")
+	} else {
+		fmt.Println("Connection to Jeager Success")
+
 	}
 
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)

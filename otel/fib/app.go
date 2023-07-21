@@ -18,7 +18,9 @@ func NewApp(r io.Reader) *App {
 }
 
 func (a *App) Run(ctx context.Context) error {
-	ctx, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Run")
+
+
+	ctx, spanEnd := opentelemetry.AddSpan(ctx, "App")
 	defer spanEnd()
 
 	for {
@@ -32,7 +34,7 @@ func (a *App) Run(ctx context.Context) error {
 }
 
 func (a *App) Poll(ctx context.Context) (uint, error) {
-	_, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Poll")
+	_, spanEnd := opentelemetry.AddSpan(ctx, "App")
 	defer spanEnd()
 
 	log.Print("This what Fabicca would like to know")
@@ -43,7 +45,7 @@ func (a *App) Poll(ctx context.Context) (uint, error) {
 }
 
 func (a *App) Write(ctx context.Context, n uint) {
-	ctx, spanEnd := opentelemetry.AddNamedSpan(ctx, "App", "Write")
+	ctx, spanEnd := opentelemetry.AddSpan(ctx, "App")
 	defer spanEnd()
 
 	f, err := Fibonacci(ctx, n)

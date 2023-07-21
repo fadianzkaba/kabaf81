@@ -2,12 +2,16 @@ package main
 
 import (
 	"context"
+	"time"
 
 	"github.com/anzx/pkg/opentelemetry"
+	
 )
 
 func Fibonacci(ctx context.Context, n uint) (uint64, error) {
-	_, spanEnd := opentelemetry.AddNamedSpan(ctx, "main", "Fibonacci")
+	_, spanEnd := opentelemetry.AddSpan(ctx, "Main")
+	time.Sleep(time.Microsecond * 500)
+
 	defer spanEnd()
 
 	if n <= 1 {
