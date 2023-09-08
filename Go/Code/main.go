@@ -1,17 +1,16 @@
 package main
 
 import (
-	"github.com/pluralsight/webservice/models"
 	"fmt"
 )
 
-func main() { 
-	var u models.User
+func main() {
 
-	u.ID = 1
-	u.FirstName = "Fadi"
-	u.SecondName = "Kaba"
+	slice := make([]int, 4, 9)
+	for i := 0; i < 7; i++ {
+		slice = append(slice, i)
+	}
 
-	fmt.Println(u)
+	fmt.Println(slice, len(slice), cap(slice))
 
 }
